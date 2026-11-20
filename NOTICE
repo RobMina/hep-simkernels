@@ -7,7 +7,7 @@ The kernels (energy loss, electron ionisation, multiple scattering, bremsstrahlu
 losses, slab propagation, GDML world ray tracing, transport, crossings, annulus geometry, helix stepping, precision
 and determinism settings, materials) and their tests were extracted from mu2e-fastsim (commit 2d332489) and made
 experiment-neutral: the Mu2e geometry's materials, field-map scale and GPU launch settings stay in mu2e-fastsim,
-which installs them through hepsimkernels.materials.register, ehelix.MAP_SCALE and precision.PROVENANCE_HOOKS.
+which installs them through hepsimkernels.settings (MATERIAL_MODULES, MAP_SCALE, PROVENANCE_HOOKS).
 The tests register the public Mu2e GDML materials as an example experiment's materials (tests/example_materials.py).
 
 The bundled tables are compact copies of Geant4 data: data/brem_sb_G4EMLOW8.6.1.npz (G4EMLOW 8.6.1 brem_SB, the

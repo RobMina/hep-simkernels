@@ -94,7 +94,7 @@ def host(tree):
     return jax.tree_util.tree_map(one, tree)
 
 
-PROVENANCE_HOOKS = []   # callables returning a dict of extra fields (e.g. an experiment's GPU launch settings)
+PROVENANCE_HOOKS = settings.PROVENANCE_HOOKS   # callables returning extra fields (e.g. GPU launch settings)
 
 
 def provenance():

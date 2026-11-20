@@ -8,9 +8,7 @@ the step. The direction obeys du/ds = K q / p (u x B), K = 0.299792458 (mm, MeV/
 """
 import numpy as np
 
-# per-map field scale applied by read_g4bl: a callable header_path -> factor (1.0: unscaled). An experiment installs its
-# own (mu2e-fastsim: bfield_scale.factor, Offline's bfield.mapScale).
-MAP_SCALE = None
+from . import settings
 
 K = 0.299792458        # MeV/c per (T mm)
 _SMALL = 1e-6          # |k s| below which the series forms are used
@@ -142,7 +140,7 @@ def read_g4bl(header_path):
     if np.fromfile(binf, dtype=np.uint32, count=1)[0] != 0xDEADBEEF:
         raise ValueError(f"{binf}: bad endian marker")
     B = np.fromfile(binf, dtype=np.float64, offset=4).reshape(n[0], n[1], n[2], 3)
-    f = MAP_SCALE(header_path) if MAP_SCALE is not None else 1.0     # opt-in per-map scale; 1.0 when none
+    f = settings.MAP_SCALE(header_path) if settings.MAP_SCALE is not None else 1.0   # experiment's per-map scale
     return lo, d, n, (B if f == 1.0 else B * f)
 
 

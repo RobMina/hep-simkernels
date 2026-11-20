@@ -11,10 +11,13 @@ The NIST materials below are registered by name in BY_NAME, which the kernels lo
 the materials of its own geometry with register() (composition, density and I as in its GDML) and per-region
 production cuts with add_cuts(); mu2e-fastsim registers the Mu2e GDML materials this way.
 """
+import importlib
 from dataclasses import dataclass, field
 from functools import cached_property
 
 import numpy as np
+
+from . import settings
 
 N_A = 6.02214076e23
 # Z, A [g/mol] of the elements of the materials here and of the experiment materials registered so far
@@ -141,3 +144,8 @@ def get(name):
         return BY_NAME[name]
     except KeyError:
         raise KeyError(f"material {name!r} has no constants: register it (hepsimkernels.materials.register)") from None
+
+
+# experiment materials: the modules named in settings.MATERIAL_MODULES register theirs now
+for _module in list(settings.MATERIAL_MODULES):
+    importlib.import_module(_module)

@@ -28,10 +28,14 @@ before importing any kernel.
 
 ## Experiment hooks
 
-- `materials.register(*materials)` adds the materials of an experiment's geometry (by GDML name);
-  `materials.add_cuts(name, region=cut_MeV)` attaches per-region delta production thresholds.
-- `ehelix.MAP_SCALE`: a callable `header_path -> factor` that scales a field map as it is read.
-- `precision.PROVENANCE_HOOKS`: callables that add fields to `precision.provenance()`.
+Set in `hepsimkernels.settings` (standard library only, so installing them imports no NumPy and fixes no device
+float):
+
+- `settings.MATERIAL_MODULES`: modules imported when `hepsimkernels.materials` is first imported. Each registers the
+  materials of an experiment's geometry with `materials.register(*materials)` (by GDML name) and per-region delta
+  production thresholds with `materials.add_cuts(name, region=cut_MeV)`.
+- `settings.MAP_SCALE`: a callable `header_path -> factor` that `ehelix.read_g4bl` applies to a field map.
+- `settings.PROVENANCE_HOOKS`: callables whose dicts `precision.provenance()` adds.
 
 ## Origin and validation
 
