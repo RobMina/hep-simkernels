@@ -24,7 +24,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install (hep-simlib first: it is not on PyPI)
+      - name: Install (hep-simlib first, it is not on PyPI)
         run: |
           python -m pip install 'hep-simlib @ git+https://github.com/RobMina/hep-simlib.git@b5868350f789f49dfc174110e72d55a40758de67'
           python -m pip install -e '.[test,jax]'
