@@ -1,0 +1,5 @@
+# The versions mu2e-fastsim tests these kernels with (its core/ci/requirements.txt). The device-vs-NumPy tests compare
+# to 1e-13-1e-14; with jax 0.12.1 two slab_jax tests exceed that (seen 2026-11-20), so CI pins the tested versions.
+jax==0.11.2
+numpy==2.5.4
+scipy==1.18.1
