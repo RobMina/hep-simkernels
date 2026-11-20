@@ -1,0 +1,16 @@
+hep-simkernels
+Copyright 2026 Rob Mina and contributors
+
+Licensed under the Apache License, Version 2.0 (LICENSE).
+
+The kernels (energy loss, electron ionisation, multiple scattering, bremsstrahlung, annihilation, muon radiative
+losses, slab propagation, GDML world ray tracing, transport, crossings, annulus geometry, helix stepping, precision
+and determinism settings, materials) and their tests were extracted from mu2e-fastsim (commit 2d332489) and made
+experiment-neutral: the Mu2e geometry's materials, field-map scale and GPU launch settings stay in mu2e-fastsim,
+which installs them through hepsimkernels.materials.register, ehelix.MAP_SCALE and precision.PROVENANCE_HOOKS.
+The tests register the public Mu2e GDML materials as an example experiment's materials (tests/example_materials.py).
+
+The bundled tables are compact copies of Geant4 data: data/brem_sb_G4EMLOW8.6.1.npz (G4EMLOW 8.6.1 brem_SB, the
+Seltzer-Berger bremsstrahlung cross sections) and data/mott_G4MottData_11.3.2.npz (the Mott/Rutherford fit coefficients of
+Geant4 11.3.2's G4MottData.hh, used by G4ScreeningMottCrossSection). Geant4 and its data are distributed under the Geant4 Software License
+(https://geant4.web.cern.ch/license); each table's manifest records its source files and their SHA-256.

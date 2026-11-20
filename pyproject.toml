@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hep-simkernels"
+version = "0.1.0"
+description = "Geant4-matched particle-matter kernels for fast simulation: energy loss with fluctuations, electron ionisation, multiple scattering, bremsstrahlung, annihilation, muon radiative losses, slab propagation and straight-line transport through GDML geometry; NumPy references with JAX twins in float32 and float64"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.10"
+# hep-simlib: the library store that checks the bundled Seltzer-Berger and Mott tables (manifests, content hashes)
+dependencies = ["numpy", "hep-simlib @ git+https://github.com/RobMina/hep-simlib.git@b5868350f789f49dfc174110e72d55a40758de67"]
+
+[project.optional-dependencies]
+jax = ["jax"]
+test = ["pytest", "scipy", "hep-simbench @ git+https://github.com/RobMina/hep-simbench.git@5d3eab140474f29301269df19bebec0cd387a261"]
+
+[tool.setuptools.packages.find]
+include = ["hepsimkernels*"]
+
+[tool.setuptools.package-data]
+hepsimkernels = ["data/*.npz", "data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
