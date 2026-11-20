@@ -9,8 +9,10 @@ description = "Geant4-matched particle-matter kernels for fast simulation: energ
 readme = "README.md"
 license = {text = "Apache-2.0"}
 requires-python = ">=3.10"
-# hep-simlib: the library store that checks the bundled Seltzer-Berger and Mott tables (manifests, content hashes)
-dependencies = ["numpy", "hep-simlib @ git+https://github.com/RobMina/hep-simlib.git@b5868350f789f49dfc174110e72d55a40758de67"]
+# hep-simlib: the library store that checks the bundled Seltzer-Berger and Mott tables (manifests, content hashes).
+# Required by name, so a project that pins its own hep-simlib commit (mu2e-fastsim) keeps it; hep-simlib is not on
+# PyPI: install it first (pip install git+https://github.com/RobMina/hep-simlib.git).
+dependencies = ["numpy", "hep-simlib"]
 
 [project.optional-dependencies]
 jax = ["jax"]
