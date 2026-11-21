@@ -47,6 +47,9 @@ validated there against Geant4 (slab and gun comparisons, and chains compared wi
 The tests here (`python -m pytest`) check every kernel against its NumPy reference and against the Geant4 numbers
 in the tests, on CPU.
 
+Public-data validation in this repository: [stopping powers against NIST ESTAR and the PDG muon tables](validation/estar_pdg/README.md)
+(electrons pass; muon ionization above about 30 GeV and muon pair production in high-Z materials are open).
+
 ## Citing
 
 Please cite the release you used: `CITATION.cff` holds the metadata (GitHub's "Cite this repository" renders it), and
