@@ -1,8 +1,15 @@
 """Muon energy loss in thin layers, matched to Geant4 11.3.2 (MuBetheBloch above 0.2 MeV, Urban fluctuations).
 
-Restricted mean loss (G4MuBetheBlochModel::ComputeDEDXPerVolume without shell, high-order and radiative corrections,
-which are below 1 % for 0.1-100 GeV muons in polystyrene), the Urban fluctuation sampler (G4UniversalFluctuation +
-G4UrbanFluctuation::SampleGlandz) and Birks saturation (G4EmSaturation). Array functions: numpy in, numpy out.
+Restricted mean loss (G4MuBetheBlochModel::ComputeDEDXPerVolume without shell, high-order and radiative
+corrections), the Urban fluctuation sampler (G4UniversalFluctuation + G4UrbanFluctuation::SampleGlandz) and Birks
+saturation (G4EmSaturation). Measured against the PDG muon tables, which include those corrections
+(validation/estar_pdg): the unrestricted mean loss is within 1 % from 0.1 GeV to about 15 GeV kinetic energy in the
+built-in materials whose PDG table has the same density (all but polyethylene and silicon dioxide; to 20 GeV in
+polystyrene, 30 GeV in air; Mylar reaches +1.04 % at 0.4 GeV), and below the table beyond that, by 2 % at 100 GeV
+and 3.7 % at 1 TeV; below 0.1 GeV it is high in high-Z materials (+2.5 % in lead at 10 MeV). Against Geant4 11.3.2's
+own G4MuBetheBlochModel (G4EmCalculator, FTFP_BERT_EMZ; validation/g4emcalc), which includes those corrections:
+within 1 % from 0.1 GeV to 25-40 GeV, -1.6 to -1.8 % at 100 GeV, about -3.4 % at 1 TeV, and +2.5 to +2.8 % in W, Au
+and Pb at 10 MeV. Array functions: numpy in, numpy out.
 """
 import numpy as np
 
