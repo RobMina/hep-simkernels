@@ -1,0 +1,14 @@
+{
+  "comment": "Declared before any comparison was computed (2026-11-21). The record carries this file's sha256. Ranges are kinetic energies in MeV; a criterion is the largest |kernel / table - 1| over the range.",
+  "estar_collision": {"kernel": "eioni.dedx_restricted(T, tcut=inf)", "range": [0.1, 1000.0], "max_rel": 0.015},
+  "estar_radiative": {"kernel": "ebrem.dedx_restricted(T, kcut=inf)", "range": [1.0, 1000.0], "max_rel": 0.01},
+  "pdg_ionization": {"kernel": "eloss.dedx_restricted(p, tcut=inf); eloss_jax in float32 and float64", "range": [100.0, 100000.0], "max_rel": 0.01,
+                     "note": "the kernel omits shell, higher-order and radiative corrections by design (its docstring: below 1 % for 0.1-100 GeV); outside the range reported only"},
+  "pdg_brems": {"kernel": "muradiative brems, b E", "range": [10000.0, 1000000.0], "max_rel": 0.05},
+  "pdg_pair": {"kernel": "muradiative pair, b E", "range": [10000.0, 1000000.0], "max_rel": 0.05},
+  "pdg_photonuc": {"kernel": "muradiative nuclear, b E", "range": [10000.0, 1000000.0], "max_rel": 0.15,
+                   "note": "Geant4's G4KokoulinMuonNuclearXS and the PDG tables' photonuclear parametrisation differ by design"},
+  "pdg_radloss": {"kernel": "sum of the three", "range": [10000.0, 1000000.0], "max_rel": 0.05},
+  "material_match": "a material whose hep-simkernels density or I differs from the table's by more than 1 % is reported without a pass line for the collision and ionization rows (density effect)",
+  "jax_vs_numpy": {"float64": 1e-12, "float32": 1e-5}
+}
