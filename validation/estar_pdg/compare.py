@@ -66,6 +66,8 @@ def run(out: Path) -> int:
         coll = eioni.dedx_restricted(mat, T, 1e9) * 10.0 / mat.rho
         rad = ebrem.dedx_restricted(mat, T, 1e9) * 10.0 / mat.rho
         m["estar"] = {"material_match": bool(match_e),
+                      "profile": {"T_MeV": T.tolist(), "collision": rel(coll, e["collision_MeV_cm2_g"]).tolist(),
+                                  "radiative": rel(rad, e["radiative_MeV_cm2_g"]).tolist()},
                       "collision": window(T, rel(coll, e["collision_MeV_cm2_g"]), *crit["estar_collision"]["range"]),
                       "collision_below": window(T, rel(coll, e["collision_MeV_cm2_g"]), 0.0, 0.1),
                       "radiative": window(T, rel(rad, e["radiative_MeV_cm2_g"]), *crit["estar_radiative"]["range"]),
@@ -91,10 +93,13 @@ def run(out: Path) -> int:
                     "ionization_device": window(Tm, rel(ion_jx, tab["ionization"]), *crit["pdg_ionization"]["range"]),
                     "ionization_10_100MeV": window(Tm, rel(ion_np, tab["ionization"]), 10.0, 100.0),
                     "ionization_100GeV_1TeV": window(Tm, rel(ion_np, tab["ionization"]), 1e5, 1e6),
-                    "device_vs_numpy": jx}
+                    "device_vs_numpy": jx,
+                    "profile": {"T_MeV": Tm.tolist(), "ionization": rel(ion_np, tab["ionization"]).tolist(),
+                                "T_rad_MeV": rad_T.tolist()}}
         for k in ("brems", "pair", "photonuc", "radloss"):
             m["pdg"][k] = window(rad_T, rel(rk[k], tab[k][hi]), *crit[f"pdg_{k}"]["range"])
             m["pdg"][k + "_1_10GeV"] = window(rad_T, rel(rk[k], tab[k][hi]), 1e3, 1e4)
+            m["pdg"]["profile"][k] = rel(rk[k], tab[k][hi]).tolist()
         checks = {}
         if match_e:
             checks["estar_collision"] = m["estar"]["collision"]["max_abs_rel"] <= crit["estar_collision"]["max_rel"]
