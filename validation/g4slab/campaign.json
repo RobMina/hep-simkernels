@@ -1,0 +1,20 @@
+{
+  "comment": "Electron and positron guns through one slab of a NIST material in vacuum, Geant4 11.3.2 FTFP_BERT_EMZ (EM option 4), default production cuts. Each case has two Geant4 halves (A, B) with independent seeds; B against A is the null. Events per half; shards of at most shard_events.",
+  "physics_list": "FTFP_BERT_EMZ",
+  "lateral_half_mm": 1000.0,
+  "approach_um": 1.0,
+  "shard_events": 50000,
+  "seed_base": 20261121,
+  "cases": [
+    {"case": "al_0p1_e-_105", "material": "G4_Al", "thickness_mm": 0.1, "pdg": 11, "T_MeV": 105.0, "events": 500000},
+    {"case": "al_0p1_e-_95", "material": "G4_Al", "thickness_mm": 0.1, "pdg": 11, "T_MeV": 95.0, "events": 500000},
+    {"case": "al_1_e-_105", "material": "G4_Al", "thickness_mm": 1.0, "pdg": 11, "T_MeV": 105.0, "events": 500000},
+    {"case": "al_1_e-_20", "material": "G4_Al", "thickness_mm": 1.0, "pdg": 11, "T_MeV": 20.0, "events": 500000},
+    {"case": "al_1_e+_105", "material": "G4_Al", "thickness_mm": 1.0, "pdg": -11, "T_MeV": 105.0, "events": 500000},
+    {"case": "mylar_2_e-_105", "material": "G4_MYLAR", "thickness_mm": 2.0, "pdg": 11, "T_MeV": 105.0, "events": 500000},
+    {"case": "mylar_2_e+_50", "material": "G4_MYLAR", "thickness_mm": 2.0, "pdg": -11, "T_MeV": 50.0, "events": 500000},
+    {"case": "w_0p35_e-_105", "material": "G4_W", "thickness_mm": 0.35, "pdg": 11, "T_MeV": 105.0, "events": 500000},
+    {"case": "w_0p35_e+_50", "material": "G4_W", "thickness_mm": 0.35, "pdg": -11, "T_MeV": 50.0, "events": 500000},
+    {"case": "w_3p5_e-_105", "material": "G4_W", "thickness_mm": 3.5, "pdg": 11, "T_MeV": 105.0, "events": 100000}
+  ]
+}
