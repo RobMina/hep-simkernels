@@ -1,5 +1,7 @@
 # hep-simkernels
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24418806.svg)](https://doi.org/10.5281/zenodo.24418806)
+
 Geant4-matched particle-matter kernels for fast simulation. Each kernel reproduces a named Geant4 11.3.2 model in
 NumPy (the reference) and, where it runs on a device, in JAX with float32 and float64 (`hepsimkernels.precision`).
 
@@ -53,5 +55,6 @@ Public-data validation in this repository: [stopping powers against NIST ESTAR a
 ## Citing
 
 Please cite the release you used: `CITATION.cff` holds the metadata (GitHub's "Cite this repository" renders it), and
-each tagged release is archived on Zenodo with its own DOI. Cite Geant4 as well (the references in `CITATION.cff`):
-the kernels re-implement its models and carry its data.
+each tagged release is archived on Zenodo with its own DOI. The concept DOI
+[10.5281/zenodo.24418806](https://doi.org/10.5281/zenodo.24418806) covers every version and resolves to the latest one.
+Cite Geant4 as well (the references in `CITATION.cff`): the kernels re-implement its models and carry its data.
