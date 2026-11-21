@@ -2,7 +2,8 @@
 # R3 campaign, analysis stage: one array task per (case, arm); arms: numpy (with the null), device float64, float32.
 #   sbatch -A <account> -p standard -c 1 --mem 8G -t 01:30:00 --array=0-29 -o <log> run_analysis.sbatch WORK SIMKERNELS SIMLIB ANA_SIF
 # then: analyze.py --combine WORK/rec_*.json --output WORK/record.json
-# Pilot (20k events per case): numpy arm 17-75 s, device 2-120 s per case, 2 GB per process.
+# Measured (campaign, 1M Geant4 events per case, 200k device): numpy arm 20 min-1:01, device 1:36-8:30 except
+# float64 in W (0.35 mm 1:14, 1 X0 0:47); MaxRSS 2.2-5.2 GB -> ask 6G and 1:30.
 set -euo pipefail
 W=$(readlink -f ${1:?work}); K=$(readlink -f ${2:?hep-simkernels}); L=$(readlink -f ${3:?hep-simlib}); ANA=${4:?analysis image}
 module load apptainer

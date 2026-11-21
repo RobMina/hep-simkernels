@@ -1,7 +1,8 @@
 #!/bin/bash
 # R3 campaign, Geant4 stage: build hepsimlib-recorder in the public hep-simlib image and run every shard, one per core.
 #   sbatch -A <account> -p standard -c 8 --mem 8G -t 01:30:00 -o <log> run_g4.sbatch WORK SIMKERNELS SIMLIB G4_SIF ANA_SIF SCALE
-# Pilot (2 x 10k events per case): 5-10 s per 10k-event shard (4 s start-up), W 3.5 mm 4.8 ms/event, 0.2 GB per process.
+# Measured: pilot 5-10 s per 10k-event shard (4 s start-up); campaign (184 shards, 9.2M events) 7:51 on 8 cores, 0.9
+# core-h, 36 GB of captures, batch MaxRSS 8.0 GB (ask 12G for 8 processes); 1 X0 W 113 s per 50k-event shard.
 set -euo pipefail
 W=$(readlink -f ${1:?work}); K=$(readlink -f ${2:?hep-simkernels}); L=$(readlink -f ${3:?hep-simlib})
 G4=${4:?geant4 image}; ANA=${5:?analysis image}; SCALE=${6:?scale}; NC=${SLURM_CPUS_PER_TASK:-1}
