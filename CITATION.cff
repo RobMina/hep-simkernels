@@ -1,0 +1,58 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "hep-simkernels: Geant4-matched particle-matter kernels for fast simulation"
+version: "0.1.0"
+date-released: "2026-11-20"
+authors:
+  - family-names: Mina
+    given-names: Rob
+    affiliation: "University of Virginia"
+    orcid: "https://orcid.org/0000-0003-2241-8566"
+repository-code: "https://github.com/RobMina/hep-simkernels"
+license: "Apache-2.0"
+abstract: >-
+  hep-simkernels re-implements named Geant4 11.3.2 electromagnetic models for fast simulation: muon energy loss with fluctuations, electron ionisation, multiple scattering, Seltzer-Berger bremsstrahlung, positron annihilation, muon radiative losses, slab propagation and straight-line transport through GDML geometry. Each kernel has a NumPy reference and, where it runs on a device, a JAX twin in float32 and float64; NIST materials and experiment hooks keep the package experiment-neutral. Compact copies of the Geant4 Seltzer-Berger and Mott data travel with it under the Geant4 Software License.
+keywords:
+  - "fast simulation"
+  - "Geant4"
+  - "energy loss"
+  - "multiple scattering"
+  - "bremsstrahlung"
+  - "JAX"
+  - "GPU"
+  - "particle physics"
+references:
+  - type: "article"
+    title: "Geant4 - a simulation toolkit"
+    authors:
+      - family-names: "Agostinelli"
+        given-names: "S."
+      - name: "Geant4 Collaboration"
+    year: 2003
+    journal: "Nuclear Instruments and Methods in Physics Research Section A"
+    volume: 506
+    start: "250"
+    doi: "10.1016/S0168-9002(03)01368-8"
+  - type: "article"
+    title: "Geant4 developments and applications"
+    authors:
+      - family-names: "Allison"
+        given-names: "J."
+      - name: "Geant4 Collaboration"
+    year: 2006
+    journal: "IEEE Transactions on Nuclear Science"
+    volume: 53
+    start: "270"
+    doi: "10.1109/TNS.2006.869826"
+  - type: "article"
+    title: "Recent developments in Geant4"
+    authors:
+      - family-names: "Allison"
+        given-names: "J."
+      - name: "Geant4 Collaboration"
+    year: 2016
+    journal: "Nuclear Instruments and Methods in Physics Research Section A"
+    volume: 835
+    start: "186"
+    doi: "10.1016/j.nima.2016.06.125"

@@ -1,0 +1,38 @@
+{
+  "title": "hep-simkernels: Geant4-matched particle-matter kernels for fast simulation",
+  "upload_type": "software",
+  "version": "0.1.0",
+  "description": "hep-simkernels re-implements named Geant4 11.3.2 electromagnetic models for fast simulation: muon energy loss with fluctuations, electron ionisation, multiple scattering, Seltzer-Berger bremsstrahlung, positron annihilation, muon radiative losses, slab propagation and straight-line transport through GDML geometry. Each kernel has a NumPy reference and, where it runs on a device, a JAX twin in float32 and float64; NIST materials and experiment hooks keep the package experiment-neutral. Compact copies of the Geant4 Seltzer-Berger and Mott data travel with it under the Geant4 Software License.",
+  "creators": [
+    {
+      "name": "Mina, Rob",
+      "affiliation": "University of Virginia",
+      "orcid": "0000-0003-2241-8566"
+    }
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "fast simulation",
+    "Geant4",
+    "energy loss",
+    "multiple scattering",
+    "bremsstrahlung",
+    "JAX",
+    "GPU",
+    "particle physics"
+  ],
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/RobMina/hep-simkernels/tree/v0.1.0",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ],
+  "references": [
+    "Agostinelli, S. et al., \"Geant4 - a simulation toolkit\", Nuclear Instruments and Methods in Physics Research Section A 506 (2003) 250, doi:10.1016/S0168-9002(03)01368-8",
+    "Allison, J. et al., \"Geant4 developments and applications\", IEEE Transactions on Nuclear Science 53 (2006) 270, doi:10.1109/TNS.2006.869826",
+    "Allison, J. et al., \"Recent developments in Geant4\", Nuclear Instruments and Methods in Physics Research Section A 835 (2016) 186, doi:10.1016/j.nima.2016.06.125"
+  ],
+  "notes": "Bundles compact copies of G4EMLOW 8.6.1 brem_SB and the G4MottData coefficients of Geant4 11.3.2, distributed under the Geant4 Software License (https://geant4.web.cern.ch/license); see NOTICE."
+}

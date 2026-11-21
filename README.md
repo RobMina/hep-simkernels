@@ -49,5 +49,6 @@ in the tests, on CPU.
 
 ## Citing
 
-Please cite the release you used: `CITATION.cff` holds the metadata once a release exists, and each tagged release
-is archived on Zenodo with its own DOI.
+Please cite the release you used: `CITATION.cff` holds the metadata (GitHub's "Cite this repository" renders it), and
+each tagged release is archived on Zenodo with its own DOI. Cite Geant4 as well (the references in `CITATION.cff`):
+the kernels re-implement its models and carry its data.
