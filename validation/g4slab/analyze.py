@@ -187,9 +187,12 @@ def verdicts(records: list[dict], crit: dict) -> dict:
     for rec in records:
         for name, c in rec["cases"].items():
             reported = name in crit.get("reported_without_pass_line", {})
+            skip = {t for a in crit.get("amendments", []) for t, cases in a.get("tests_without_pass_line", {}).items()
+                    if name in cases}
             for arm_name, tests in c["arms"].items():
                 if not reported or arm_name == "null":
-                    pvals.setdefault(arm_name, []).extend(t["p"] for t in tests.values())
+                    pvals.setdefault(arm_name, []).extend(
+                        t["p"] for k, t in tests.items() if arm_name == "null" or k not in skip)
     out = {}
     for arm_name, ps in pvals.items():
         bmin = min(1.0, min(ps) * len(ps))
