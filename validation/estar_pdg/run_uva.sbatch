@@ -1,11 +1,11 @@
 #!/bin/bash
 # R2: hep-simkernels vs ESTAR and PDG muon tables, both device floats. NumPy and CPU JAX only.
-# Sized for a new job type: one core, under a minute of compute expected; 4G / 30 min requested.
+# Measured (2026-11-21): 30-38 s elapsed, MaxRSS 1.4-1.6 GB on one core; requested 3G / 5 min.
 #SBATCH -J simk-estar-pdg
 #SBATCH -p standard
 #SBATCH -c 1
-#SBATCH --mem=4G
-#SBATCH -t 00:30:00
+#SBATCH --mem=3G
+#SBATCH -t 00:05:00
 # usage: sbatch -A <account> -o <log> run_uva.sbatch <hep-simkernels checkout> <hep-simlib checkout> <image.sif>
 set -euo pipefail
 K=${1:?hep-simkernels}; L=${2:?hep-simlib}; SIF=${3:?image}
