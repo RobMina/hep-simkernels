@@ -36,6 +36,8 @@ float):
   production thresholds with `materials.add_cuts(name, region=cut_MeV)`.
 - `settings.MAP_SCALE`: a callable `header_path -> factor` that `ehelix.read_g4bl` applies to a field map.
 - `settings.PROVENANCE_HOOKS`: callables whose dicts `precision.provenance()` adds.
+- `settings.FALLBACK_MATERIAL`: the registered material name that `transport.world_loss` uses for a world piece whose
+  material is not registered. Unset (`None`), an unregistered material is an error (`transport.piece_material`).
 
 ## Origin and validation
 

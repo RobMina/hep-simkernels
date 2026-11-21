@@ -12,7 +12,7 @@ Detector packages own the geometry-specific parts (which plane, which footprint,
 """
 import numpy as np
 
-from . import eloss, materials
+from . import eloss, materials, settings
 from . import world as world_mod
 
 
@@ -262,13 +262,26 @@ def slab_loss(rng, mat, p, length, radiative=True):
     return np.where(stopped, tk0, np.minimum(lost, tk0))
 
 
+def piece_material(name):
+    """The material of a world piece: the registered material of that name, else the one named by
+    settings.FALLBACK_MATERIAL (an experiment's choice for materials it has no constants for, e.g. its concrete).
+    With no fallback set, an unregistered name is an error."""
+    mat = materials.BY_NAME.get(name)
+    if mat is not None:
+        return mat
+    if settings.FALLBACK_MATERIAL is None:
+        raise KeyError(f"material {name!r} is not registered (hepsimkernels.materials.register) and "
+                       "hepsimkernels.settings.FALLBACK_MATERIAL is not set")
+    return materials.BY_NAME[settings.FALLBACK_MATERIAL]
+
+
 def world_loss(rng, o, d, p, world, band_edges_y, return_band_p=False, return_tail=False, return_band_len=False):
     """Material between o and the plane y = band_edges_y[-1] (tracks going down).
 
     band_edges_y: decreasing heights [mm]; the last is the plane. Returns (|p| at the plane, total x/X0, survived?,
     x/X0 per band, path distance from each band's centre to the plane); with return_band_p=True also the mean of the
     entry and exit |p| of each band [N, nbands] (for sliced scattering in msc_to_plane). Loss per material is integrated in slices
-    (slab_loss); materials without constants are treated as concrete. The band lever arms let msc_to_plane place the
+    (slab_loss); a material without constants takes settings.FALLBACK_MATERIAL (piece_material). The band lever arms let msc_to_plane place the
     scattering where it happens (material close above the plane scatters with a short arm, distant air with a long one).
     return_tail=True appends the single-scattering inputs per band: nuclear chi_c^2 [N, nbands] at the band's mean |p| and the
     chi_c^2-weighted form-factor angle theta_nuclear (msc_to_plane band_chic2, band_thn).
@@ -304,7 +317,7 @@ def world_loss(rng, o, d, p, world, band_edges_y, return_band_p=False, return_ta
         for name, c in col.items():
             if not c.any():
                 continue
-            mat = materials.BY_NAME.get(name, materials.CONCRETE_MARS)
+            mat = piece_material(name)
             hit = np.flatnonzero(c > 0)
             loss[hit] += slab_loss(rng, mat, _p_after(p[hit], loss[hit]), c[hit])
             band_xx0[:, k] += c / eloss.radiation_length_mm(mat)
