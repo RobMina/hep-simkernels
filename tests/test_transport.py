@@ -240,3 +240,32 @@ def test_all_primary_muons_keys():
     assert m[["event", "idx", "mukey"]].values.tolist() == [[1, 0, 1], [1, 1, 2], [2, 0, 1]]
     first = T.primary_muons(g.sort_values(["event", "idx"]))
     assert first.idx.tolist() == m[m.mukey == 1].idx.tolist()
+
+
+def test_piece_material_registered_fallback_and_error(monkeypatch):
+    from hepsimkernels import settings
+    monkeypatch.setattr(settings, "FALLBACK_MATERIAL", None)
+    assert T.piece_material("G4_AIR") is M.AIR
+    with pytest.raises(KeyError, match="no_such_material"):
+        T.piece_material("no_such_material")
+    monkeypatch.setattr(settings, "FALLBACK_MATERIAL", "G4_Al")
+    assert T.piece_material("no_such_material") is M.ALUMINIUM
+    assert T.piece_material("G4_AIR") is M.AIR
+
+
+def test_world_loss_needs_no_experiment_attributes(monkeypatch):
+    """world_loss names no experiment material: with only NIST materials as attributes of hepsimkernels.materials (the
+    example experiment's are deleted here) and no fallback, a world of registered materials runs."""
+    from hepsimkernels import settings
+    monkeypatch.setattr(settings, "FALLBACK_MATERIAL", None)
+    for attr in [a for a, v in vars(M).items() if isinstance(v, M.Material) and not v.name.startswith("G4_")]:
+        monkeypatch.delattr(M, attr)
+    cube = np.array([[1, 0, 0, 5000], [-1, 0, 0, 5000], [0, 1, 0, 3000],
+                     [0, -1, 0, -2000], [0, 0, 1, 5000], [0, 0, -1, 5000]], float)
+    world = [("G4_Al", cube, np.array([-5000.0, 2000, -5000]), np.array([5000.0, 3000, 5000]))]
+    n = 50
+    o = np.tile([0.0, 4000.0, 0.0], (n, 1))
+    d = np.tile([0.0, -1.0, 0.0], (n, 1))
+    p_plane, xx0, alive, _, _ = T.world_loss(np.random.default_rng(1), o, d, np.full(n, 3000.0), world, [4000.0, 0.0])
+    assert np.isclose(xx0[0], 1000.0 / E.radiation_length_mm(M.ALUMINIUM) + 3000.0 / E.radiation_length_mm(M.AIR))
+    assert alive.all() and (p_plane < 3000.0).all()
