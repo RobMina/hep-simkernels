@@ -1,0 +1,10 @@
+{
+  "comment": "Declared before any G4EmCalculator output exists (2026-11-21). Kernel = hep-simkernels NumPy; Geant4 = G4EmCalculator::ComputeDEDX with cut DBL_MAX, FTFP_BERT_EMZ, mu- and mu+; PDG = validation/tables/pdg_muon.json.",
+  "materials": ["G4_W", "G4_Au", "G4_Pb", "G4_CESIUM_IODIDE", "G4_Al", "G4_Cu", "G4_POLYSTYRENE"],
+  "kernel_vs_geant4": {
+    "muIoni": {"range_MeV": [100.0, 100000.0], "max_rel": 0.01},
+    "muPairProd": {"range_MeV": [10000.0, 1000000.0], "max_rel": 0.02},
+    "muBrems": {"range_MeV": [10000.0, 1000000.0], "max_rel": 0.02}
+  },
+  "classification": "per material and process: a deviation of the kernel from PDG is a kernel defect if the kernel also departs from Geant4 by more than the kernel_vs_geant4 limit, and a Geant4-vs-PDG difference if the kernel agrees with Geant4 within it while Geant4 departs from PDG"
+}

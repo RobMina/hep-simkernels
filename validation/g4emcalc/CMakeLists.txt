@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.16)
+project(hepsimkernels_emcalc CXX)
+find_package(Geant4 REQUIRED)
+add_executable(emcalc emcalc.cc)
+target_compile_features(emcalc PRIVATE cxx_std_17)
+target_link_libraries(emcalc PRIVATE ${Geant4_LIBRARIES})
+target_include_directories(emcalc PRIVATE ${Geant4_INCLUDE_DIRS})
