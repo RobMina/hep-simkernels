@@ -3,21 +3,10 @@
   "bins": 40,
   "tests": "per case: two-sample chi2 of the transmitted primaries' energy loss, exit polar angle and lateral displacement, the reflected primaries' exit energy, the photon and delta energy spectra of the primary's direct children; two-sample z tests of the transmitted, reflected, stopped and annihilated fractions and of the photons and deltas per primary",
   "pass": "Bonferroni-corrected minimum p over every test of an arm >= 0.001",
-  "arms": {
-    "null": "Geant4 B vs Geant4 A (must pass: it measures the test's own false-failure rate)",
-    "numpy": "hepsimkernels.eslab (float64, msc on) vs Geant4 A+B",
-    "device_float64": "hepsimkernels.eslab_jax in float64 vs Geant4 A+B (counts and fractions only for secondaries)",
-    "device_float32": "hepsimkernels.eslab_jax in float32 vs Geant4 A+B"
-  },
+  "arms": {"null": "Geant4 B vs Geant4 A (must pass: it measures the test's own false-failure rate)",
+           "numpy": "hepsimkernels.eslab (float64, msc on) vs Geant4 A+B",
+           "device_float64": "hepsimkernels.eslab_jax in float64 vs Geant4 A+B (counts and fractions only for secondaries)",
+           "device_float32": "hepsimkernels.eslab_jax in float32 vs Geant4 A+B"},
   "device_events_max": 200000,
-  "reported_without_pass_line": {
-    "al_0p1_e-_95": "Geant4 option 4 switches multiple-scattering models at 100 MeV; the mu2e-fastsim slab checks recorded a Geant4 95 vs 105 MeV difference on the same slab"
-  },
-  "amendments": [
-    {
-      "date": "2026-11-21",
-      "after": "the pilot (2 x 10k events per case), before the campaign",
-      "change": "the stopped and annihilated fractions are compared as one absorbed fraction: Geant4 ends an in-flight annihilation with zero kinetic energy, so the recorder's end state cannot separate it from annihilation at rest (the pilot's labelling was wrong)"
-    }
-  ]
+  "reported_without_pass_line": {"al_0p1_e-_95": "Geant4 option 4 switches multiple-scattering models at 100 MeV; the mu2e-fastsim slab checks recorded a Geant4 95 vs 105 MeV difference on the same slab"}
 }
