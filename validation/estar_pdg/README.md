@@ -77,6 +77,35 @@ Outcome per row:
 Status: **tested, not closed** for muon ionization above about 30 GeV and for muon pair production in high-Z
 materials. The criteria stay as declared.
 
+## Geant4's own values (`validation/g4emcalc`, 2026-11-21)
+
+To tell kernel defects from differences between Geant4 and the PDG tables, `emcalc.cc` asks G4EmCalculator for the
+unrestricted muon losses of Geant4 11.3.2 itself (FTFP_BERT_EMZ, mu- and mu+, the PDG energy grid; W, Au, Pb, CsI and
+the low-Z controls Al, Cu, polystyrene). Criteria in `validation/g4emcalc/criteria.json`, declared before the run;
+`record.json` holds every value. One CPU job, 19 s.
+
+| Material | ionization: kernel / Geant4 (worst, 0.1-100 GeV) | Geant4 / PDG | pair: kernel / Geant4 (10 GeV-1 TeV) | Geant4 / PDG | brems: kernel / Geant4 |
+|---|---|---|---|---|---|
+| G4_W | -1.67 % (100 GeV) | -0.72 % | -0.39 % | +18.40 % (20 GeV) | -0.04 % |
+| G4_Au | -1.65 % | -0.77 % | -0.39 % | +20.84 % (10 GeV) | -0.04 % |
+| G4_Pb | -1.60 % | -0.81 % | -0.39 % | +22.53 % (10 GeV) | -0.03 % |
+| G4_CESIUM_IODIDE | -1.59 % | -0.66 % | -0.40 % | +10.98 % (20 GeV) | -0.04 % |
+| G4_Al | -1.79 % | -0.19 % | -0.43 % | +2.53 % | -0.05 % |
+| G4_Cu | -1.81 % | -0.27 % | -0.41 % | +4.68 % | -0.04 % |
+| G4_POLYSTYRENE | -1.75 % | -0.16 % | -0.44 % | +2.49 % | -0.05 % |
+
+- **Pair production: a Geant4-vs-PDG difference, not a kernel defect.** The kernel reproduces G4MuPairProductionModel
+  within 0.44 % everywhere; Geant4 itself sits 11-23 % above the PDG table in high-Z materials at 10-20 GeV (the PDG
+  table's pair term includes post-Born corrections).
+- **Bremsstrahlung:** the kernel equals G4MuBremsstrahlungModel within 0.05 %.
+- **Ionization: the kernel's own shortfall.** Geant4 stays within 0.8 % of PDG, while the kernel falls below Geant4:
+  within 1 % from 0.1 GeV to 25-40 GeV, -1.6 to -1.8 % at 100 GeV, about -3.4 % at 1 TeV, and +2.5 to +2.8 % in W,
+  Au and Pb at 10 MeV. These are the corrections the kernel leaves out of G4MuBetheBlochModel (shell, higher-order,
+  radiative). The module docstring states these numbers.
+
+Updated status: pair production is closed as a Geant4 property (the kernel matches the model it names). Muon
+ionization above about 25 GeV stays open as a documented kernel approximation.
+
 ## Running
 
 ```bash
