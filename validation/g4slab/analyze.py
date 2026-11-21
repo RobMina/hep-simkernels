@@ -6,7 +6,7 @@
 Per case it reads every capture of halves A and B (hepsimlib.capture.tables, "tracks" table) and the production
 thresholds in energy from the shards' Geant4 couple tables. It then builds the arms of criteria.json: Geant4 B vs A
 (null), eslab (NumPy, float64) and eslab_jax in float64 and float32 (device; both run in this process, the device
-float being set per call). Observables: the primary's fate (transmitted, reflected, stopped, annihilated in flight),
+float being set per call). Observables: the primary's fate (transmitted, reflected, absorbed = stopped or annihilated),
 the transmitted primaries' energy loss, exit polar angle and lateral displacement on the exit face, the reflected
 primaries' exit energy, and the primary's direct photons (eBrem) and delta rays (eIoni) per primary and their energy
 spectra (NumPy arm only: the device arm returns counts per track).
@@ -160,9 +160,12 @@ def z_test(ka, na, kb, nb, kind="binomial"):
 def compare(ref: dict, arm: dict, case: dict, nbins: int, spectra: bool) -> dict:
     T0 = case["T_MeV"]
     out = {}
-    for k in ("trans", "refl", "stop", "annih"):
-        if ref[k].sum() + arm[k].sum() > 0:
-            out[f"frac_{k}"] = z_test(ref[k].sum(), ref["n"], arm[k].sum(), arm["n"])
+    # absorbed = stopped or annihilated: Geant4's end state does not tell annihilation in flight from at rest
+    # (the in-flight step also ends with zero kinetic energy), so the two are compared together
+    for k, sel in (("trans", ref["trans"]), ("refl", ref["refl"]), ("absorbed", ref["stop"] | ref["annih"])):
+        a_sel = arm["trans"] if k == "trans" else arm["refl"] if k == "refl" else arm["stop"] | arm["annih"]
+        if sel.sum() + a_sel.sum() > 0:
+            out[f"frac_{k}"] = z_test(sel.sum(), ref["n"], a_sel.sum(), arm["n"])
     lr, la = T0 - ref["T"][ref["trans"]], T0 - arm["T"][arm["trans"]]
     if lr.size > 10 * nbins:
         out["loss"] = chi2_test(lr, la, edges_from(lr, nbins))
